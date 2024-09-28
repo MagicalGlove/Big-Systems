@@ -1,327 +1,188 @@
 import { useEffect, useState } from "react";
-import { editTaskAPI, getAllTasksAPI } from "./api/tasks";
-import { Task } from "./types/tasks";
-import { deleteTask } from "./utils/deleteTask";
-import { completedTask } from "./utils/completedTask";
-import { addTask } from "./utils/addTask";
+import { getAllWarehousesAPI, getAllJobsAPI, addJobAPI } from "./api/entities";
+import { Job, Warehouse } from "./types/types";
+import { addJob } from "./utils/addJob";
 import "./App.css";
 
 const App = () => {
-  const [tasks, setTasks] = useState<Task[]>();
-  const [editTask, setEditTask] = useState<Task>();
-  const [text, setText] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [deadline, setDeadline] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<number>(4);
-  const [editTaskId, setEditTaskId] = useState<string>("");
+  const [warehouses, setWarehouses] = useState<Warehouse[]>();
+  const [jobs, setJobs] = useState<Job[]>();
+  const [chemicalsAmount, setChemicalsAmount] = useState<number>(0);
+  const [incoming, setIncoming] = useState<boolean>(true);
+  const [warehouseNumber, setWarehouseNumber] = useState<number>(1);
 
-  const fetchTasks = async () => {
+  const fetchData = async () => {
     try {
-      const tasks = await getAllTasksAPI();
-      console.log("Tasks:", tasks);
-      setTasks(tasks);
+      const jobs = await getAllJobsAPI();
+      console.log("Jobs:", jobs);
+      setJobs(jobs);
+      const warehouses = await getAllWarehousesAPI();
+      console.log("Warehouses:", warehouses);
+      setWarehouses(warehouses);
     } catch (error) {
-      console.error("Error fetching tasks:", error);
+      console.error("Error fetching data:", error);
     }
   };
 
-  const handleAddTask = async () => {
+  const handleAddJob = async () => {
     try {
-      const newTask: Task = {
-        text: text,
-        isCompleted: false,
-        description: description,
-        ...(deadline && { deadline: deadline }),
+      const newJob: Job = {
+        chemicalsAmount: chemicalsAmount,
+        incoming: false,
+        warehouseNumber: warehouseNumber,
       };
-      await addTask(newTask);
-      setText("");
-      setDeadline("");
-      setDescription("");
-      await fetchTasks();
+      await addJob(newJob);
+      setChemicalsAmount(0);
+      setIncoming(true);
+      setWarehouseNumber(0);
+      await fetchData();
     } catch (error) {
       console.error("Error adding task:", error);
     }
   };
 
   useEffect(() => {
-    fetchTasks();
+    fetchData();
   }, []);
 
-  const handleEditTask = async () => {
-    try {
-      const editedTask = {
-        ...editTask,
-        text: text,
-        description: description,
-        deadline: deadline,
-      };
-      console.log(editedTask);
-      const updatedTask = await editTaskAPI(editedTask);
-      console.log("Updated task:", updatedTask);
-      fetchTasks();
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
+  console.log(warehouses);
 
-  const handleChangeCategory = async (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    task: Task
-  ) => {
-    try {
-      const editedTask = {
-        ...task,
-        category: parseInt(e.target.value),
-      };
-      console.log(editedTask);
-      const updatedTask = await editTaskAPI(editedTask);
-      console.log("Updated task:", updatedTask);
-      fetchTasks();
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
-
-  async function handleButtonClick(id: string | undefined): Promise<void> {
-    if (!id) return;
-    try {
-      await deleteTask(id);
-      console.log("Task deleted:", id);
-      await fetchTasks();
-    } catch (error) {
-      console.error("Error deleting task:", error);
-    }
-  }
-
-  async function handleCompleteTask(
-    id: string | undefined,
-    isCompleted: boolean | undefined
-  ): Promise<void> {
-    if (!id || typeof isCompleted !== "boolean") return;
-    try {
-      await completedTask(id, isCompleted);
-      console.log("Task completed/uncompleted:", id);
-      await fetchTasks();
-    } catch (error) {
-      console.error("Error deleting task:", error);
-    }
-  }
-  const handleTabChange = (category: number) => {
-    setSelectedCategory(category);
-  };
-
-  const filteredTasks = tasks?.filter((task) => {
-    if (selectedCategory === 4) {
-      return true;
-    }
-    
-    if (selectedCategory === 0 && !task.category) {
-      return true;
-    }
-    
-    return task.category === selectedCategory;
-  });
+  
   
 
+  // async function handleButtonClick(id: string | undefined): Promise<void> {
+  //   if (!id) return;
+  //   try {
+  //     await deleteTask(id);
+  //     console.log("Task deleted:", id);
+  //     await fetchTasks();
+  //   } catch (error) {
+  //     console.error("Error deleting task:", error);
+  //   }
+  // }
+
+  // async function handleCompleteTask(
+  //   id: string | undefined,
+  //   isCompleted: boolean | undefined
+  // ): Promise<void> {
+  //   if (!id || typeof isCompleted !== "boolean") return;
+  //   try {
+  //     await completedTask(id, isCompleted);
+  //     console.log("Task completed/uncompleted:", id);
+  //     await fetchTasks();
+  //   } catch (error) {
+  //     console.error("Error deleting task:", error);
+  //   }
+  // }
+
+   const handleToggle = () => {
+    setIncoming(!incoming);
+  };
+ 
   return (
-    <div className="App">
-      <div className="container" style={{ backgroundColor: "aliceblue" }}>
-        <div className="header" style={{ marginBottom: "20px" }}>
-          <input
-            style={{
-              backgroundColor: "white",
-              borderColor: "black",
-              borderWidth: "1.8px",
-            }}
-            type="text"
-            disabled
-            value={
-              editTask?.id
-                ? `Edit task: ${editTask?.id}`
-                : 'Click "edit" on a task'
-            }
-            className="input-field"
-          />
-          <input
-            type="text"
-            id="c-task-text"
-            placeholder="Task Text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            className="input-field"
-          />
-          <input
-            type="text"
-            id="c-task-description"
-            placeholder="Task description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="input-field"
-          />
-          <input
-            type="date"
-            id="c-task-date"
-            placeholder="Task Deadline"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
-            className="input-field"
-          />
-          <button
-            style={{
-              marginRight: "20px",
-              backgroundColor: "lightgreen",
-              borderRadius: "8px",
-            }}
-            className="add-task-button"
-            onClick={handleEditTask}
-          >
-            Edit Task
-          </button>
-          <button
-            style={{ backgroundColor: "lightgreen", borderRadius: "8px" }}
-            className="add-task-button"
-            onClick={handleAddTask}
-            id="c-add-button"
-          >
-            Add Task
-          </button>
-        </div>
-        <div className="tabs">
-          <button
-            style={{
-              backgroundColor: selectedCategory === 4 ? "lightgreen" : "white",
-            }}
-            onClick={() => handleTabChange(4)}
-          >
-            All
-          </button>
-          <button
-            id="c-work-tab"
-            style={{
-              backgroundColor: selectedCategory === 1 ? "lightgreen" : "white",
-            }}
-            onClick={() => handleTabChange(1)}
-          >
-            Work
-          </button>
-          <button
-            id="c-chores-tab"
-            style={{
-              backgroundColor: selectedCategory === 2 ? "lightgreen" : "white",
-            }}
-            onClick={() => handleTabChange(2)}
-          >
-            Chores
-          </button>
-          <button
-            style={{
-              backgroundColor: selectedCategory === 3 ? "lightgreen" : "white",
-            }}
-            onClick={() => handleTabChange(3)}
-          >
-            Leisure
-          </button>
-          <button
-            style={{
-              backgroundColor: selectedCategory === 0 ? "lightgreen" : "white",
-            }}
-            onClick={() => handleTabChange(0)}
-          >
-            None
-          </button>
-        </div>
-        <div className="table-container">
-          <table className="table-content">
-            <thead>
-              <tr>
-                <th className="table-cell table-cell-header">Text</th>
-                <th className="table-cell table-cell-header">Description</th>
-                <th className="table-cell table-cell-header">Deadline</th>
-                <th className="table-cell table-cell-header">Set category</th>
-                <th className="table-cell table-cell-header">Completed</th>
-                <th className="table-cell table-cell-header">Delete</th>
-                <th className="table-cell table-cell-header">Edit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredTasks?.map((task) => (
-                <tr key={task.id}>
-                  <td className="table-cell">{task.text}</td>
-                  <td className="table-cell">{task.description}</td>
-                  <td className="table-cell">{task.deadline || "-"}</td>
-                  <td className="table-cell">
-                    <select
-                      value={task.category}
-                      onChange={(e) => handleChangeCategory(e, task)}
-                    >
-                      <option value="0">None</option>
-                      <option value="1">Work</option>
-                      <option value="2">Chores</option>
-                      <option value="3">Leisure</option>
-                    </select>
-                  </td>
-                  <td className="table-cell">
-                  <span
-  role="img"
-  aria-label={task.isCompleted ? "complete" : "incomplete"}
-  style={{
-    fontSize: "30px",
-    cursor: "pointer",
-  }}
-  onClick={() => handleCompleteTask(task.id, !task.isCompleted)}
->
-  {task.isCompleted ? "✅" : "❌"}
-</span>
+  <div className="App">
+    <div className="warehouse-cards-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px' }}>
+  {warehouses?.map((warehouse) => (
+    <div
+      key={warehouse.id}
+      className="warehouse-card"
+      style={{
+        backgroundColor: 'white',
+        padding: '20px',
+        borderRadius: '10px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        width: '250px',
+        textAlign: 'center'
+      }}
+    >
+      <h3>Warehouse {warehouse.warehouseNumber}</h3>
+      <p><strong>Storage:</strong></p>
+      <p>{warehouse.currentStorage}/{warehouse.maximumStorage} units</p>
+    </div>
+  ))}
+</div>
 
-                  </td>
-                  <td className="table-cell">
-                    <button
-                      id={`c-delete-button-${task.id}`}
-                      style={{
-                        backgroundColor: "red",
-                        marginBottom: "10px",
-                        cursor: "pointer",
-                        border: "2px solid black",
-                        borderRadius: "4px",
-                      }}
-                      onClick={() => handleButtonClick(task.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                  <td className="table-cell">
-                  <span
-  role="img"
-  aria-label="Edit"
-  style={{
-    fontSize: "25px",
-    cursor: "pointer",
-  }}
-  onClick={() => {
-    setEditTask(task);
-    setText(task?.text || "N/A");
-    setDescription(task?.description || "N/A");
-    setDeadline(
-      task?.deadline ||
-        (() => {
-          const today = new Date();
-          today.setDate(today.getDate() + 7);
-          return today.toISOString().split("T")[0];
-        })()
-    );
-  }}
->
-  ✏️
-</span>
+    <div style={{display: 'flex', gap: '64px'}}>
+      <div className="container" style={{ backgroundColor: "aliceblue", borderRadius: "10px" }}>
+        <div className="header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: "20px" }}>
 
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <label style={{ marginBottom: "10px", fontWeight: 'bold', fontSize: '16px' }}>Chemicals:</label>
+          <input
+            type="number"
+            placeholder="Amount of chemicals"
+            value={chemicalsAmount}
+            onChange={(e) => setChemicalsAmount(Number(e.target.value))}
+            className="input-field"
+            style={{ marginBottom: "20px", padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
+          />
+          </div>
+
+
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: "20px" }}>
+            <label style={{ fontWeight: 'bold', marginRight: "10px" }}>Warehouse Number:</label>
+            <input
+              type="number"
+              placeholder="Warehouse number"
+              value={warehouseNumber}
+              onChange={(e) => setWarehouseNumber(Number(e.target.value))}
+              className="input-field"
+              style={{ padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: "20px" }}>
+            <p style={{ fontWeight: 'bold' }}> {incoming ? 'Incoming' : 'Outgoing'}</p>
+            <label className="switch" style={{ marginRight: "10px" }}>
+              <input type="checkbox" checked={incoming} onChange={handleToggle} />
+              <span className="slider" />
+            </label>
+          </div>
+
+          <button
+            style={{ backgroundColor: "lightgreen", borderRadius: "8px", padding: "10px 20px", fontWeight: 'bold', cursor: 'pointer', border: 'none' }}
+            className="add-task-button"
+            onClick={handleAddJob}
+          >
+            Check Ticket
+          </button>
+
         </div>
       </div>
+      <div>
+      <div className="jobs-elevator" style={{ maxHeight: '400px', overflowY: 'auto', padding: '10px', border: '1px solid #ccc', borderRadius: '10px' }}>
+      {jobs?.slice().sort((a, b) => b.warehouseNumber - a.warehouseNumber).map((job) => (    
+      <div
+      key={job.id}
+      className="container"
+      style={{
+        backgroundColor: "aliceblue",
+        borderRadius: "10px",
+        marginBottom: "15px",
+      }}
+    >
+      <div style={{ marginBottom: "20px", display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', alignItems: 'center'}}>
+          <label style={{ marginBottom: "10px", fontWeight: 'bold', fontSize: '16px' }}>Amount of units:</label>
+          {job.chemicalsAmount}
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: "20px" }}>
+          <label style={{ fontWeight: 'bold', marginRight: "10px" }}>Warehouse Number:</label>
+          <span>{job.warehouseNumber}</span>
+        </div>
+
+
+          {job.incoming ? "Incoming" : "Outgoing"}
+      </div>
     </div>
+  ))}
+</div>
+
+      </div>
+    </div>
+  </div>
+
   );
 };
 
