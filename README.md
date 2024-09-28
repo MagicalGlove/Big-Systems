@@ -1,17 +1,40 @@
-# Big-Systems
+# Beeg-Systems
 
-## Project description:
+## Project Description
 
-The main purpose of this application is to work in a team, using a project with issues, tasks and columns. This will give members a clear understanding of how to track the progress of tasks and other members.
-The application itself is a simple prototype, only consisting of a few user stories from a bigger assignment description.
+The primary objective of the **Beeg-Systems** application is to improve team collaboration by managing a project with issues, tasks, and columns. This setup provides team members with a clear understanding of task progress and the status of other members' work. The application serves as a simple prototype, encapsulating a few user stories derived from a larger assignment description.
 
-## The project board:
+## Project Board
 
-The project connected to this application consists of 4 columns.
-ToDo, In progress, Testing and Done.
-The "ToDo" column is meant for tasks that still have not started and are to be done in the future.
-The "In progress" column is for tasks that are currently being worked on and not yet complete.
-The "Testing" column is for tasks that appear to be done, but needs to be tested properly in order to make sure no bugs are hiding and that it works as expected.
-The "Done" column is for tasks that are complete, thereby being fully coded and tested.
+The project board connected to this application consists of four columns:
 
-Through the use of all these columns, it is possible to see exactly how far a task is from being completed
+1. **ToDo**: 
+   - This column lists tasks that have not yet been started and are scheduled for future work.
+  
+2. **In Progress**: 
+   - This column tracks tasks that are currently being worked on but are not yet complete.
+  
+3. **Testing**: 
+   - Tasks that are marked as complete but require thorough testing to ensure no bugs are present and that they function as expected are placed in this column.
+  
+4. **Done**: 
+   - This column contains tasks that are fully coded, tested, and confirmed as complete.
+
+Utilizing these columns allows the team to easily track the status and progress of tasks.
+
+## Project Requirements
+
+### Warehouse Control System
+
+The **Beeg-Systems** project is focused on simulating the development of a Warehouse Control System for Associated Chemical Merchant Enterprises, which operates a depot for the storage of hazardous chemicals. This system aims to ensure compliance with EU and UK health and safety regulations.
+
+## Getting Started
+
+To get started with this project, follow the installation instructions and guidelines outlined below. 
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/MagicalGlove/Big-Systems.git
+   cd Big-Systems
