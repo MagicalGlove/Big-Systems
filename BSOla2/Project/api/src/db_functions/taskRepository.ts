@@ -1,7 +1,6 @@
 import {AppDataSource} from '../ormconfig';
 import {Task} from '../entities/Task';
 import {ObjectId} from "mongodb";
-import {checkAddTaskBoundary} from './logicChecks';
 
 const taskRepository = AppDataSource.getMongoRepository(Task);
 
@@ -12,7 +11,6 @@ async function createTask(
     isCompleted: boolean | undefined
 ) {
 
-    checkAddTaskBoundary(text, description, deadline, isCompleted);
 
     const newTask = taskRepository.create({
         text: text,
