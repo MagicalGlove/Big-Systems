@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
-import { Task} from './entities/Task';
+import { Warehouses } from './entities/Warehouses';
+import { Jobs } from './entities/Jobs';
 import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '../config.env') });
@@ -17,5 +18,5 @@ export const AppDataSource = new DataSource({
   useUnifiedTopology: true,
   synchronize: true,
   logging: true,
-  entities: [Task],
+  entities: [Warehouses, Jobs],
 });
