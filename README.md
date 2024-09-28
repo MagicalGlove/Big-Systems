@@ -8,16 +8,19 @@ The primary objective of the **Beeg-Systems** application is to improve team col
 
 The project board connected to this application consists of four columns:
 
-1. **ToDo**: 
+1. **ToDo**:
+
    - This column lists tasks that have not yet been started and are scheduled for future work.
-  
-2. **In Progress**: 
+
+2. **In Progress**:
+
    - This column tracks tasks that are currently being worked on but are not yet complete.
-  
-3. **Testing**: 
+
+3. **Testing**:
+
    - Tasks that are marked as complete but require thorough testing to ensure no bugs are present and that they function as expected are placed in this column.
-  
-4. **Done**: 
+
+4. **Done**:
    - This column contains tasks that are fully coded, tested, and confirmed as complete.
 
 Utilizing these columns allows the team to easily track the status and progress of tasks.
@@ -30,11 +33,17 @@ The **Beeg-Systems** project is focused on simulating the development of a Wareh
 
 ## Getting Started
 
-To get started with this project, follow the installation instructions and guidelines outlined below. 
+To get started with this project, follow the installation instructions and guidelines outlined below.
 
-### Installation
+### Installation and running the application
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/MagicalGlove/Big-Systems.git
-   cd Big-Systems
+   cd "\Big-Systems\BSOla2\Project\api"
+   npm install
+   npm run dev
+   cd "\Big-Systems\BSOla2\Project\client"
+   npm install
+   npm start
+   ```
