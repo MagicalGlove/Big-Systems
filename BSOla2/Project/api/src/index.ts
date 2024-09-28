@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { AppDataSource } from "./ormconfig";
-import { getAllWarehouses } from "./db_functions/warehouseRepository";
+import { getAllWarehouses, updateWarehouse } from "./db_functions/warehouseRepository";
 import { createJob, getAllJobs} from "./db_functions/jobRepository";
 import cors from "cors";
 
@@ -41,13 +41,15 @@ AppDataSource.initialize()
         app.post("/jobs", async (req: Request, res: Response) => {
             try {
                 const {chemicalsAmount, incoming, warehouseNumber} = req.body;
-                const task = await createJob(chemicalsAmount, incoming, warehouseNumber);
-                res.json(task);
+                const job = await createJob(chemicalsAmount, incoming, warehouseNumber);
+                const warehouse = await updateWarehouse(chemicalsAmount, incoming, warehouseNumber);
+                
+                res.json(job);
             } catch (error) {
-                console.error("Error fetching warehouses:", error); // eslint-disable-line no-console
+                console.error("Error fetching creating job:", error); // eslint-disable-line no-console
                 res
                     .status(500)
-                    .json({error: "An error occurred while fetching warehouses"});
+                    .json({error: "An error occurred while creating job"});
             }
         });
         if (process.env.Node_ENV !== "test") {

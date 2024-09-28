@@ -28,7 +28,7 @@ const App = () => {
     try {
       const newJob: Job = {
         chemicalsAmount: chemicalsAmount,
-        incoming: false,
+        incoming: incoming,
         warehouseNumber: warehouseNumber,
       };
       await addJob(newJob);
@@ -44,36 +44,6 @@ const App = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  console.log(warehouses);
-
-  
-  
-
-  // async function handleButtonClick(id: string | undefined): Promise<void> {
-  //   if (!id) return;
-  //   try {
-  //     await deleteTask(id);
-  //     console.log("Task deleted:", id);
-  //     await fetchTasks();
-  //   } catch (error) {
-  //     console.error("Error deleting task:", error);
-  //   }
-  // }
-
-  // async function handleCompleteTask(
-  //   id: string | undefined,
-  //   isCompleted: boolean | undefined
-  // ): Promise<void> {
-  //   if (!id || typeof isCompleted !== "boolean") return;
-  //   try {
-  //     await completedTask(id, isCompleted);
-  //     console.log("Task completed/uncompleted:", id);
-  //     await fetchTasks();
-  //   } catch (error) {
-  //     console.error("Error deleting task:", error);
-  //   }
-  // }
 
    const handleToggle = () => {
     setIncoming(!incoming);
