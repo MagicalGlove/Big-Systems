@@ -1,5 +1,8 @@
 import {useEffect, useState} from "react";
 import "./App.css";
+import {postTicketAPI} from "./api/tasks";
+import {getJobs} from "./api/tasks";
+import {Ticket} from "./types/ticket";
 
 const App = () => {
     const [warehouseA, setWarehouseA] = useState<string>("0");
@@ -7,23 +10,41 @@ const App = () => {
     const [warehouseC, setWarehouseC] = useState<string>("0");
     const [amount, setAmount] = useState<string>("0");
     const [name, setName] = useState<string>("")
+    const [tickets, setTickets] = useState<Ticket[]>()
 
     const handleAmountChange = (event: string) => {
-        const result = event.replace(/\D/g, "")
-
-        setAmount(result);
+        setAmount(event.replace(/\D/g, ""));
     }
 
     const handleNameChange = (event: string) => {
-        setName(event)
+        setName(event.replace(/\D/g, ""))
     }
 
-    const handleDelivery = () => {
-
+    const handleDelivery = async () => {
+        try {
+            await postTicketAPI({warehouseID: Number(name), amount: Number(amount), increasing: true});
+            setAmount("0");
+            setName("0");
+            await getJobs();
+        } catch (e) {
+            console.log(e);
+        }
     }
 
-    const handlePickup = () => {
+    const handlePickup = async () => {
+        try {
+            await postTicketAPI({warehouseID: Number(name), amount: Number(amount), increasing: false});
+            setAmount("0");
+            setName("0");
+            await getJobs();
+        } catch (e) {
+            console.log(e);
+        }
     }
+
+    useEffect(() => {
+        getJobs();
+    });
 
     return (
         <div className="App">
@@ -31,15 +52,15 @@ const App = () => {
                 <div className="header" style={{marginBottom: "20px"}}>
                     <div className="warehouses">
                         <div className="single">
-                            <h1 style={{textAlign: "center"}}>A</h1>
+                            <h1 style={{textAlign: "center"}}>Warehouse 1</h1>
                             <h2 style={{textAlign: "center"}}>{warehouseA} / 50</h2>
                         </div>
                         <div className="single">
-                            <h1 style={{textAlign: "center"}}>B</h1>
+                            <h1 style={{textAlign: "center"}}>Warehouse 2</h1>
                             <h2 style={{textAlign: "center"}}>{warehouseB} / 50</h2>
                         </div>
                         <div className="single">
-                            <h1 style={{textAlign: "center"}}>C</h1>
+                            <h1 style={{textAlign: "center"}}>Warehouse 3</h1>
                             <h2 style={{textAlign: "center"}}>{warehouseC} / 50</h2>
                         </div>
                     </div>
@@ -105,6 +126,7 @@ const App = () => {
                     </div>
                 </div>
                 <div className="history">
+
                 </div>
             </div>
         </div>
