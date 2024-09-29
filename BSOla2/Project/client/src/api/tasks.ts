@@ -1,8 +1,11 @@
-import { Task } from "../types/tasks";
+import { Ticket } from "../types/ticket";
 
 const baseUrl = "http://localhost:3001";
 
-export const getAllTasksAPI = async (): Promise<Task[]> => {
+
+
+/*
+export const getAllTasksAPI = async (): Promise<Ticket[]> => {
   const response = await fetch(`${baseUrl}/tasks`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -13,7 +16,7 @@ export const getAllTasksAPI = async (): Promise<Task[]> => {
   return response.json();
 };
 
-export const addTaskAPI = async (newTask: Task): Promise<Task> => {
+export const addTaskAPI = async (newTask: Ticket): Promise<Ticket> => {
   const response = await fetch(`${baseUrl}/tasks`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -25,7 +28,7 @@ export const addTaskAPI = async (newTask: Task): Promise<Task> => {
   return response.json();
 };
 
-export const deleteTaskAPI = async (deleteTaskId: string): Promise<Task> => {
+export const deleteTaskAPI = async (deleteTaskId: string): Promise<Ticket> => {
   const response = await fetch(`${baseUrl}/tasks`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
@@ -40,7 +43,7 @@ export const deleteTaskAPI = async (deleteTaskId: string): Promise<Task> => {
 export const completedTaskAPI = async (
   completedTaskId: string,
   isCompleted: boolean
-): Promise<Task> => {
+): Promise<Ticket> => {
   const response = await fetch(`${baseUrl}/tasks`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
@@ -52,7 +55,7 @@ export const completedTaskAPI = async (
   return response.json();
 };
 
-export const editTaskAPI = async (task: Task): Promise<Task> => {
+export const editTaskAPI = async (task: Ticket): Promise<Ticket> => {
   const response = await fetch(`${baseUrl}/tasks/${task.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -63,3 +66,4 @@ export const editTaskAPI = async (task: Task): Promise<Task> => {
   }
   return response.json();
 };
+*/

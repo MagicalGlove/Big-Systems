@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96d88c75-984f-4e7e-8780-50eb15916dc6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../Ola2/Project/client/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Ola2/Project/client/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/db_functions/logicChecks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/db_functions/logicChecks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/tests/boundaryEquivalence.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/tests/boundaryEquivalence.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/client.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/ticket.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/warehouse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/tasks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/tasks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/tasks.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/completedTask.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +22,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2me7YdQtjiDIPL5Qdo5ACocSJ8p" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -31,7 +33,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Implement-frontend-functionality",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Mads/Documents/Github/SoftwareQuality/ola3/Project/client",
     "node.js.detected.package.eslint": "true",
@@ -43,7 +46,7 @@
     "nodejs_interpreter_path": "C:/Users/Mads/AppData/Roaming/JetBrains/IntelliJIdea2024.2/node/versions/20.17.0/npm",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "settings.nodejs",
-    "ts.external.directory.path": "C:\\Users\\Mads\\Documents\\Github\\SoftwareQuality\\ola3\\Project\\client\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\Mads\\Documents\\Github\\Big-Systems\\BSOla2\\Project\\client\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -64,6 +67,8 @@
       <option name="presentableId" value="Default" />
       <updated>1727425236797</updated>
       <workItem from="1727425237829" duration="1004000" />
+      <workItem from="1727533033239" duration="1805000" />
+      <workItem from="1727592586856" duration="8074000" />
     </task>
     <servers />
   </component>
